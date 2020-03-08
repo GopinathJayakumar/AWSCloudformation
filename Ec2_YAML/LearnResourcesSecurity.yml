@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Basic EC2 Instance.
+
+Resources:
+   DevMyEC2Instance:
+      Type: AWS::EC2::Instance
+      Properties:
+         ImageId:
+         InstanceType: t2.micro
+         KeyName:
+         SecurityGroups:
+            - default 
+            - !Ref SSHSecurityGroup  
+   SSHSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+         GroupDescription: my new SSH SG
+         SecurityGroupIngress:
+            - IpProtocol: tcp
+              FromPort: '22'
+              ToPort: '22'
+              CidrIp: 0.0.0.0/0      

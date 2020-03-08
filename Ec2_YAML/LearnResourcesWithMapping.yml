@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AZ EC2 Instance.
+
+Mappings:
+   MyRegionMap:
+      ap-south-1:
+         HVM: ami-05695932c5299858a
+      ap-southeast-1:
+         HVM:  ami-043afc2b8b6cfba5c      
+
+Parameters:
+   MyKeyName:
+      Description: Select the keyName from the list
+      Type: AWS::EC2::KeyPair::KeyName
+  
+Resources:
+   DevMyEC2Instance:
+      Type: AWS::EC2::Instance
+      Properties:
+         ImageId: !FindInMap
+            - MyRegionMap
+            - !Ref 'AWS::Region'
+            - HVM
+         InstanceType: t2.micro
+         KeyName: !Ref MyKeyName
+         SecurityGroups:
+            - default 
+            - !Ref SSHSecurityGroup        
+   SSHSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+         GroupDescription: my new SSH SG
+         SecurityGroupIngress:
+            - IpProtocol: tcp
+              FromPort: '22'
+              ToPort: '22'
+              CidrIp: 0.0.0.0/0      

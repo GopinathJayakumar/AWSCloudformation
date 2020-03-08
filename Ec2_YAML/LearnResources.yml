@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Basic EC2 Instance.
+
+Resources:
+   DevMyEC2Instance:
+      Type: AWS::EC2::Instance
+      Properties:
+         ImageId: ami-05695932c5299858a
+         InstanceType: t2.micro        
+         SecurityGroups:
+            - default
